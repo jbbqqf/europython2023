@@ -1,0 +1,26 @@
+
+[DATA_NODE.amplitude]
+storage_type = "pickle"
+default_data = "1:int"
+scope = "SCENARIO:SCOPE"
+
+[DATA_NODE.frequency]
+storage_type = "pickle"
+default_data = "1:int"
+scope = "SCENARIO:SCOPE"
+
+[TASK.modulate]
+inputs = [ "amplitude:SECTION", "frequency:SECTION" ]
+outputs = [ "signal:SECTION" ]
+function = "main.modulate:function"
+skippable = "False:bool"
+
+[DATA_NODE.signal]
+storage_type = "pickle"
+scope = "SCENARIO:SCOPE"
+
+[PIPELINE.modulation]
+tasks = [ "modulate:SECTION" ]
+
+[SCENARIO.modulable_signal]
+pipelines = [ "modulation:SECTION" ]
