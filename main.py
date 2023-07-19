@@ -38,14 +38,15 @@ def on_frequency_change(state):
 
 
 def on_scenario_change(state, variable_name, value):
-    if value is not None:
+    if variable_name == "selected_scenario" and value:
         state.amplitude = state.selected_scenario.amplitude.read()
         state.frequency = state.selected_scenario.frequency.read()
 
         if not state.selected_scenario.signal.is_ready_for_reading:
             submit_signal(state)
-            state.chart_partial.update_content(state, create_chart(state.signals))
-
+        else:
+            state.signals = generate_signals()
+        state.chart_partial.update_content(state, create_chart(state.signals))
 
 tp.config.Config.load("signal.toml")
 tp.Core().run()
